@@ -1,7 +1,29 @@
+import { useState } from 'react'
 import './App.css'
 
 
 function App() {
+
+  const [task, setTask] = useState('')
+  const [time, setTime] = useState('')
+  const [taskList, setTaskList] = useState([{
+    task: '',
+    time: ''
+  }])
+
+  const handleChangeTask = (e) => {
+    setTask(e.target.value)
+  }
+
+  const handleChangeTime = (e) => {
+    setTime(e.target.value)
+  }
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    setTaskList((prev) => [...prev, {task: task, time: time}])
+    console.log(taskList)
+  }
 
   return (
     <div className="App">
@@ -10,24 +32,45 @@ function App() {
           <legend>Adicionar Tarefa</legend>
           <div className="wrapper">
             <label htmlFor="task">Tarefa: </label>
-            <input type="text" name="task" id="task"/>
+            <input className="form--input" onChange={handleChangeTask} type="text" name="task" id="task" placeholder="Nome da Tarefa"/>
           </div>
 
           <div className="wrapper">
             <label htmlFor="time">Horário: </label>
-            <input type="time" name="time" id="time"/>
+            <input className="form--input" onChange={handleChangeTime} type="time" name="time" id="time"/>
           </div>
 
-          <div className="wrapper">
-            <label htmlFor="date">Dia: </label>
-            <input type="date" name="date" id="date"/>
-          </div>
-
-          <button>Adicionar</button>
+          <button onClick={handleClick}>Adicionar</button>
 
         </fieldset>
       </form>
+
+      <div className="list--wrapper">
+        <div className="list--container">
+          
+          <ul>
+            <li className='list--checkbox'><input type="checkbox" name="done" id="done" /></li>
+            <li className='list--task'>Tarefa</li>
+            <li className='list--time'>Horario</li>
+            <li className='list--delete'>X</li>
+            {typeof taskList !== "undefined" && 
+            taskList.map((item) => {
+              <>
+              <li className='list--checkbox'><input type="checkbox" name="done" id="done" /></li>
+              <li className='list--task'>{item.task}</li>
+              <li className='list--time'>{item.time}</li>
+              <li className='list--delete'>X</li>
+             </> 
+
+          })}
+            
+          </ul>
+
+        </div>
+      </div>
     </div>
+      
+
   )
 }
 
