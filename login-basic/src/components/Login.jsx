@@ -8,7 +8,6 @@ export default function Login() {
 
   const handleClick = () => {
     
-    let allAccounts = []
     Axios
       .get("http://127.0.0.1:5174/getData")
       .then((response)   => {

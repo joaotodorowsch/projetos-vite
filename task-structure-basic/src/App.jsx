@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios'
+import Task from './components/task/task'
 
 
 function App() {
 
   const [task, setTask] = useState('')
-  const [time, setTime] = useState('')
+  const [time, setTime] = useState()
   const [taskList, setTaskList] = useState([{
     task: '',
     time: ''
@@ -27,11 +28,34 @@ function App() {
       task: task,
       time: time,
     })
-    .then((response) => {
-      console.log(response)
+    .then(() => {
+      axios.post("http://127.0.0.1:5174/search", {
+        task: task,
+        time: time,
+      })   
+      .then((response) => {
+        setTaskList(() => [
+          ...taskList, 
+          {
+            id: response.data[0].id,
+            task: task,
+            time: time,
+          }]
+        )
+      })
     })
+    setTask('')
+    setTime('')
   }
   
+  // Lista
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:5174/getData')
+    .then((response) => {
+      setTaskList(response.data)
+    })
+  }, [])
 
   return (
     <div className="App">
@@ -40,12 +64,12 @@ function App() {
           <legend>Adicionar Tarefa</legend>
           <div className="wrapper">
             <label htmlFor="task">Tarefa: </label>
-            <input className="form--input" onChange={handleChangeTask} type="text" name="task" id="task" placeholder="Nome da Tarefa"/>
+            <input value={task}className="form--input" onChange={handleChangeTask} type="text" name="task" id="task" placeholder="Nome da Tarefa"/>
           </div>
 
           <div className="wrapper">
             <label htmlFor="time">Horário: </label>
-            <input className="form--input" onChange={handleChangeTime} type="time" name="time" id="time"/>
+            <input value={time} className="form--input" onChange={handleChangeTime} type="time" name="time" id="time"/>
           </div>
 
           <button onClick={handleClick}>Adicionar</button>
@@ -57,19 +81,21 @@ function App() {
         <div className="list--container">
           
           <ul>
-            <li className='list--checkbox'><input type="checkbox" name="done" id="done" /></li>
             <li className='list--task'>Tarefa</li>
             <li className='list--time'>Horario</li>
-            <li className='list--delete'>X</li>
             {typeof taskList !== "undefined" && 
             taskList.map((item) => {
-              <>
-              <li className='list--checkbox'><input type="checkbox" name="done" id="done" /></li>
-              <li className='list--task'>{item.task}</li>
-              <li className='list--time'>{item.time}</li>
-              <li className='list--delete'>X</li>
-             </> 
-
+              return (
+              <Task 
+                key={item.id} 
+                taskList={taskList} 
+                setTaskList={setTaskList}
+                id={item.id}
+                task={item.task}
+                time={item.time}
+                data={item.data} 
+                />
+              )
           })}
             
           </ul>

@@ -72,14 +72,19 @@ ul {
 }
 .list--checkbox {
     justify-self: start;
+    grid-column: 1 / 2;
 }
 .list--task {
     justify-self: start;
+    grid-column: 2 / 3;
 }
 .list--time{
     justify-self: center;
     text-transform: capitalize;
+    grid-column: 3 / 4;
 }
 .list--delete{
     justify-self: end;
+    grid-column: 4 / 5;
+    cursor: pointer;
 }
