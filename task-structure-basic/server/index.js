@@ -10,9 +10,19 @@ const db = mySQL.createPool({
     database:"db_tasklist",
 })
 
-
 app.use(cors())
 app.use(express.json())
+
+app.post("/", (req, res) => {
+    const { task } = req.body
+    const { time } = req.body
+ 
+    let SQL = "INSERT INTO tasks ( task, time ) VALUES ( ?,? )"
+ 
+    db.query(SQL, [task, time], (err, result) => {
+     console.log(err)
+    })
+ })
 
 app.listen(5174, () => {
     console.log("Rodando servidor");

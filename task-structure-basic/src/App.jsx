@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+import axios from 'axios'
 
 
 function App() {
@@ -21,9 +22,16 @@ function App() {
 
   const handleClick = (e) => {
     e.preventDefault()
-    setTaskList((prev) => [...prev, {task: task, time: time}])
-    console.log(taskList)
+    axios.post('http://127.0.0.1:5174/', 
+    {
+      task: task,
+      time: time,
+    })
+    .then((response) => {
+      console.log(response)
+    })
   }
+  
 
   return (
     <div className="App">

@@ -14,7 +14,7 @@ export default function Register() {
         ...prev,
         [e.target.name] : e.target.value,      
       }))
-    }
+  }
     
     const handleClick = () => {
       Axios.post("http://127.0.0.1:5174/register", 
