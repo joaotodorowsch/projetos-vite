@@ -80,9 +80,10 @@ function App() {
       <div className="list--wrapper">
         <div className="list--container">
           
-          <ul>
+          <ul className='list--first'>
             <li className='list--task'>Tarefa</li>
             <li className='list--time'>Horario</li>
+          </ul>
             {typeof taskList !== "undefined" && 
             taskList.map((item) => {
               return (
@@ -97,8 +98,6 @@ function App() {
                 />
               )
           })}
-            
-          </ul>
 
         </div>
       </div>
