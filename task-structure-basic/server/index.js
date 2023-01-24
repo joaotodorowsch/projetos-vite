@@ -55,6 +55,19 @@ app.delete("/delete/:id", (req, res) => {
     });
   });
 
+app.put("/edit", (req, res) => {
+
+  const { id, task, time } = req.body
+
+  let SQL = "UPDATE tasks SET task = ?, time = ? WHERE id = ?"
+
+  db.query(SQL, [task, time, id], (err, result) => {
+    if(err) console.log(err)
+    else res.send(result)
+  })
+
+})
+
 app.listen(5174, () => {
     console.log("Rodando servidor");
 });

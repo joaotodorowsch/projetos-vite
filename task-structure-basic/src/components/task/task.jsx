@@ -34,10 +34,12 @@ export default function Task(props) {
             <FormDialog 
             open={open}
             setOpen={setOpen}
+            id={props.id}
             task={props.task}
             time={props.time}
             taskList={props.taskList} 
             setTaskList={props.setTaskList}
+            handleDelete={handleDelete}
             />
             <li onClick={handleDelete} className='list--delete'>X</li>
        </ul> 

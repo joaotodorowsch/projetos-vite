@@ -7,8 +7,16 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { useState } from 'react';
+import axios from 'axios';
 
 export default function FormDialog(props) {
+
+  const [editedValues, setEditedValues] = useState({
+    id: props.id,
+    task: props.task,
+    time: props.time
+  })
 
   const handleClickOpen = () => {
     props.setOpen(true);
@@ -16,11 +24,22 @@ export default function FormDialog(props) {
 
   const handleClose = () => {
     props.setOpen(false);
-  };
+  }
 
-      
-  function handleChange (e) {
-        
+  const handleSave = () => {
+    axios.put("http://127.0.0.1:5174/edit",{
+      id: editedValues.id,
+      task: editedValues.task,
+      time: editedValues.time
+    })
+    handleClose()
+  }
+    
+  const handleChange = (e) => {
+    setEditedValues( prev => ({
+      ...prev,
+      [e.target.id] : e.target.value
+    })) 
   }
 
   return (
@@ -56,8 +75,8 @@ export default function FormDialog(props) {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Cancelar</Button>
-              <Button onClick={handleClose}>Salvar</Button>
-              <Button onClick={handleClose}>Excluir</Button>
+              <Button onClick={handleSave}>Salvar</Button>
+              <Button onClick={() => props.handleDelete()}>Excluir</Button>
             </DialogActions>
           </Dialog>
     </div>
