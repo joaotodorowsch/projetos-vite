@@ -31,7 +31,7 @@ export default function Task(props) {
             <li className='list--checkbox'><input type="checkbox" name="done" id="done" /></li>
             <li className='list--task'>{props.task}</li>
             <li className='list--time'>{props.time}</li>
-            <FormDialog 
+            <FormDialog
             open={open}
             setOpen={setOpen}
             taskId={props.id}

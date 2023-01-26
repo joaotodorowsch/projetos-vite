@@ -65,7 +65,7 @@ export default function FormDialog(props) {
   }
 
   return (
-    <div>
+    <div className='list--update'>
         <Button className="Button" variant="outlined" onClick={handleClickOpen}>
         🖊
         </Button>
