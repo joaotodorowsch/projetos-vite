@@ -64,12 +64,12 @@ function App() {
           <legend>Adicionar Tarefa</legend>
           <div className="wrapper">
             <label htmlFor="task">Tarefa: </label>
-            <input value={task}className="form--input" onChange={handleChangeTask} type="text" name="task" id="task" placeholder="Nome da Tarefa"/>
+            <input value={task}className="form--input" onChange={handleChangeTask} type="text" name="task" id="task" placeholder="Nome da Tarefa" required/>
           </div>
 
           <div className="wrapper">
             <label htmlFor="time">Horário: </label>
-            <input value={time} className="form--input" onChange={handleChangeTime} type="time" name="time" id="time"/>
+            <input value={time} className="form--input" onChange={handleChangeTime} type="time" name="time" id="time" required/>
           </div>
 
           <button onClick={handleClick}>Adicionar</button>
@@ -88,7 +88,7 @@ function App() {
             taskList.map((item) => {
               return (
               <Task 
-                key={item.id} 
+                key={`${item.id}.task`} 
                 taskList={taskList} 
                 setTaskList={setTaskList}
                 id={item.id}

@@ -34,7 +34,7 @@ export default function Task(props) {
             <FormDialog 
             open={open}
             setOpen={setOpen}
-            id={props.id}
+            taskId={props.id}
             task={props.task}
             time={props.time}
             taskList={props.taskList} 

@@ -13,7 +13,7 @@ import axios from 'axios';
 export default function FormDialog(props) {
 
   const [editedValues, setEditedValues] = useState({
-    id: props.id,
+    id: props.taskId,
     task: props.task,
     time: props.time
   })
@@ -27,10 +27,32 @@ export default function FormDialog(props) {
   }
 
   const handleSave = () => {
-    axios.put("http://127.0.0.1:5174/edit",{
+
+    axios.put("http://127.0.0.1:5174/edit", {
       id: editedValues.id,
       task: editedValues.task,
       time: editedValues.time
+    })
+    .then(() => {
+      axios.post("http://127.0.0.1:5174/search", {
+        id: editedValues.id,
+        task: editedValues.task,
+        time: editedValues.time
+      })
+      .then((response) => {
+        props.setTaskList(
+          props.taskList.map((value) => {
+            return value.id == editedValues.id
+            ? 
+            {
+            id: editedValues.id,
+            task: editedValues.task,
+            time: editedValues.time
+            } 
+            : value
+        })
+        )
+      })
     })
     handleClose()
   }
